@@ -65,10 +65,13 @@ $ docker compose down
 ## Offline Usage
 
 If you need to use this container on a server that does not have Internet, you can:
+
+* Add any Python packages you need to **host-volume/python-packages.txt**. See "Python Support" below.
 * Build the image on a connected server first.
   ```bash
   $ docker compose build
   ```
+  * You can also use the convenience script `x-build.sh`.
 * Export the docker image to a file.
   ```bash
   $ ./x-export.sh
@@ -108,6 +111,10 @@ Once the container is running, enter the container. (See "CONTAINER SHELL" above
 $ python <your-script>.py <args>'
 ```
 
+### Adding Python Packages
+
+Simply edit the file **host-volume/python-packages.txt** and add the package name and version to the file. The package will be installed the next time the container image is built. You might need to rebuild with `docker compose build` or with the convenience script `./x-build.sh`.
+
 ## Customizations
 
 This section discusses the customizations this repo makes to the original Network-MultiTool container.
@@ -123,7 +130,7 @@ This section discusses the customizations this repo makes to the original Networ
 2. Aliases inside the container:
    * `ll` (long list) mapped to `ls -al`
 3. Maps the host directory **host-volume** into the container's **/root/host-volume** directory.
-4. Support for python3, pip3 and any python dependencies listed in **host-volume/python-packages.txt**.
+4. Support for python3, pip3 and any python dependencies listed in **host-volume/python-packages.txt**. Some example python scripts are also included.
 
 
 
