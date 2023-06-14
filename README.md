@@ -50,6 +50,10 @@ For example, to get the public IP of the host (using a CURL against https://ifco
 ```bash
 $ docker compose exec -it network-multitool curl https://ifconfig.co
 ```
+or
+```bash
+$ ./x-exec.sh curl https://ifconfig.co
+```
 
 ### CONTAINER STOP
 To stop the container, use:
