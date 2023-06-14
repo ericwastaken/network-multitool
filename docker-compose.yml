@@ -1,0 +1,16 @@
+version: '3'
+services:
+  network-multitool:
+    build:
+      context: ./
+    image: ericwastaken/network-multitool:1.0.0
+    container_name: network-multitool
+    hostname: network-multitool
+    restart: unless-stopped
+    network_mode: "host"
+    tty: true
+    environment:
+      - HTTP_PORT=8080
+      - HTTPS_PORT=1443
+    volumes:
+      - ./host-volume:/root/host-volume
