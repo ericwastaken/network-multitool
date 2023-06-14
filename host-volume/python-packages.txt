@@ -1,0 +1,2 @@
+# List packages to install at image build time.
+pylogix==0.8.11

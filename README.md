@@ -37,6 +37,20 @@ $ docker exec -it network-multitool /bin/bash
 * Note the host directory **./host-volume** is mapped into the container into **/root/host-volume**. This is a convenient way to move files between the host and the container.
 * Exit the shell with CTRL-D or the exit command.
 
+### CONTAINER EXEC
+
+With the container running, run any command with:
+
+```bash
+$ docker compose exec -it network-multitool <your-command> <args>'
+```
+* You can also use the convenience script `x-exec.sh your-command and any args`.
+
+For example, to get the public IP of the host (using a CURL against https://ifconfig.co):
+```bash
+$ docker compose exec -it network-multitool curl https://ifconfig.co
+```
+
 ### CONTAINER STOP
 To stop the container, use:
 
@@ -61,5 +75,46 @@ If you need to use this container on a server that does not have Internet, you c
   $ ./x-import.sh
   ```
 * Start the container on the offline server as described above.
+
+## Python Support
+
+The container is enhanced with Python3, Pip3 and any packages defined in **host-volume/python-packages.txt**. This is useful for running python scripts in the container.
+
+Scripts can be run from the host or from inside the container.
+
+### Running Python Scripts from the Host
+
+With the container running, run your script with:
+
+```bash
+$ docker compose exec -it network-multitool python <your-script>.py <args>'
+```
+* You can also use the convenience script `x-exec.sh your-python-script.py and any args`.
+
+### Running Python Scripts from the Container
+
+Once the container is running, enter the container. (See "CONTAINER SHELL" above.) Run your script with:
+```bash
+$ python <your-script>.py <args>'
+```
+
+## Customizations
+
+This section discusses the customizations this repo makes to the original Network-MultiTool container.
+
+1. Convenience scripts
+   * `x-build.sh` - Builds the docker image.
+   * `x-up.sh` - Starts the container.
+   * `x-force-build-and-up.sh` - Forces a rebuild of the docker image and starts the container.
+   * `x-exec.sh` - Runs a command inside the running container.
+   * `x-shell.sh` - Starts a shell in the container.
+   * `x-export.sh` - Exports the docker image to a file. Useful for moving the image to an offline server.
+   * `x-import.sh` - Imports the docker image from a file. Useful for loading the image on an offline server.
+2. Aliases inside the container:
+   * `ll` (long list) mapped to `ls -al`
+3. Maps the host directory **host-volume** into the container's **/root/host-volume** directory.
+4. Support for python3, pip3 and any python dependencies listed in **host-volume/python-packages.txt**.
+
+
 
 
