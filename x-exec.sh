@@ -1,4 +1,4 @@
 #!/bin/bash
 
-# Shell into the running container
-docker exec -it network-multitool "$@"
+# Exec a command in the container (can receive pipe input)
+docker exec -i network-multitool "$@"

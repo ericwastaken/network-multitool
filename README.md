@@ -42,13 +42,13 @@ $ docker exec -it network-multitool /bin/bash
 With the container running, run any command with:
 
 ```bash
-$ docker compose exec -it network-multitool <your-command> <args>'
+$ docker compose exec -i network-multitool <your-command> <args>'
 ```
 * You can also use the convenience script `x-exec.sh your-command and any args`.
 
 For example, to get the public IP of the host (using a CURL against https://ifconfig.co):
 ```bash
-$ docker compose exec -it network-multitool curl https://ifconfig.co
+$ docker compose exec -i network-multitool curl https://ifconfig.co
 ```
 or
 ```bash
