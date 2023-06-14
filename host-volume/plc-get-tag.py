@@ -18,7 +18,8 @@ with PLC() as plc:
       # Establish a connection to the PLC
       plc.IPAddress = ip
       plc.Port = port
-      plc.ProcessorSlot = slot
+      if slot > 0:
+        plc.ProcessorSlot = slot
 
       # Send a request to read a tag
       response = plc.Read(tag_name)

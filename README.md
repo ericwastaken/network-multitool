@@ -86,6 +86,12 @@ The container is enhanced with Python3, Pip3 and any packages defined in **host-
 
 Scripts can be run from the host or from inside the container.
 
+The pylogix package is installed by default along with some example scripts demonstrating how to communicate with Allen-Bradley PLCs.
+
+> **Notes:** 
+> 1. The pylogix package is not installed on the host. It is only installed in the container.
+> 2. This project is not affiliated with Allen-Bradley or Rockwell Automation. The pylogix package is open source and available at: https://github.com/dmroeder/pylogix.
+
 ### Running Python Scripts from the Host
 
 With the container running, run your script with:
