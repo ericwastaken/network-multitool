@@ -55,6 +55,29 @@ or
 $ ./x-exec.sh curl https://ifconfig.co
 ```
 
+### CONTAINER EXEC WITH PATH ON HOST
+
+This project provides a **bin-mapping** folder with a command that can be used to run commands inside the container. It's possible to add this folder to your PATH so that the tools could be used inside the HOST by replacing the tool name with `nmt <tool-name>`.
+
+In your .basrc or .zshrc file add the following line to add the container's bin mapping to your path:
+
+```bash
+export PATH="/path/to/this/repo/bin-mapping:$PATH"
+```
+
+For example, with the above in place, you can run the following commands from the host:
+
+```bash
+# curl a remote site
+$ nmt curl https://ifconfig.co
+# netcat a host for a port
+$ nmt nc -zv google.com 443
+# Pass stdin to the container's jq command
+$ cat /some/file/with/json | nmt jq
+$ some-command-that-produces-json | nmt jq
+```
+(Note, these are only a few examples. ALL the commands in the container are available this way.)
+
 ### CONTAINER STOP
 To stop the container, use:
 
@@ -100,7 +123,7 @@ The pylogix package is installed by default along with some example scripts demo
 With the container running, run your script with:
 
 ```bash
-$ docker compose exec -it network-multitool python <your-script>.py <args>'
+$ docker compose exec -i network-multitool python <your-script>.py <args>'
 ```
 * You can also use the convenience script `x-exec.sh your-python-script.py and any args`.
 
