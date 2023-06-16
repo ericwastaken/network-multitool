@@ -90,17 +90,17 @@ $ docker compose down
 If you need to use this container on a server that does not have Internet, you can:
 
 * Add any Python packages you need to **host-volume/python-packages.txt**. See "Python Support" below.
-* Build the image on a connected server first.
+* Build the image on a connected server first. From the root director of this repo:
   ```bash
   $ docker compose build
   ```
   * You can also use the convenience script `x-build.sh`.
-* Export the docker image to a file.
+* Export the docker image to a file. From the root directory of this repo:
   ```bash
   $ ./x-export.sh
   ```
 * Move the all the files in this repo, including the exported docker image, using any offline method (usb drive, etc.) The exported image is placed in the **./exported** directory if you use the convenience `x-export.sh` script.
-* Load the image on the offline server.
+* Load the image on the offline server. On the offline server, from the root directory of this project:
   ```bash
   $ ./x-import.sh
   ```
@@ -142,7 +142,7 @@ Simply edit the file **host-volume/python-packages.txt** and add the package nam
 
 This section discusses the customizations this repo makes to the original Network-MultiTool container.
 
-1. Convenience scripts
+1. Convenience scripts, which verify dependencies and run docker commands when necessary:
    * `x-build.sh` - Builds the docker image.
    * `x-up.sh` - Starts the container.
    * `x-force-build-and-up.sh` - Forces a rebuild of the docker image and starts the container.
@@ -150,10 +150,11 @@ This section discusses the customizations this repo makes to the original Networ
    * `x-shell.sh` - Starts a shell in the container.
    * `x-export.sh` - Exports the docker image to a file. Useful for moving the image to an offline server.
    * `x-import.sh` - Imports the docker image from a file. Useful for loading the image on an offline server.
-2. Aliases inside the container:
+2. Support for running the container commands via the host's PATH.
+3. Aliases inside the container:
    * `ll` (long list) mapped to `ls -al`
-3. Maps the host directory **host-volume** into the container's **/root/host-volume** directory.
-4. Support for python3, pip3 and any python dependencies listed in **host-volume/python-packages.txt**. Some example python scripts are also included.
+4. Maps the host directory **host-volume** into the container's **/root/host-volume** directory.
+5. Support for python3, pip3 and any python dependencies listed in **host-volume/python-packages.txt**. Some example python scripts are also included.
 
 
 
