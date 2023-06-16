@@ -1,6 +1,18 @@
 #!/bin/bash
 
-# detect if the compose is running and start if not
+# detect if docker is installed
+if ! [ -x "$(command -v docker)" ]; then
+    echo "Docker is not installed. Please install docker and try again."
+    exit 1
+fi
+
+# detect if docker-compose is installed
+if ! [ -x "$(command -v docker-compose)" ]; then
+    echo "Docker Compose is not installed. Please install docker-compose and try again."
+    exit 1
+fi
+
+# detect if the container is running and start if not
 if [ ! "$(docker ps -q -f name=network-multitool)" ]; then
     # start the compose
     docker compose up -d
