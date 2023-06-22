@@ -6,7 +6,7 @@ services:
     image: ericwastaken/network-multitool:1.0.0
     container_name: network-multitool
     hostname: network-multitool
-    restart: unless-stopped
+    restart: no
     network_mode: "host"
     environment:
       - HTTP_PORT=8080

@@ -126,6 +126,10 @@ With the container running, run your script with:
 $ docker compose exec -i network-multitool python <your-script>.py <args>'
 ```
 * You can also use the convenience script `x-exec.sh your-python-script.py and any args`.
+* Or if you've mapped the bin-mapping folder into your path, you can run:
+  ```bash
+  $ nmt python <your-script>.py <args>'
+  ```
 
 ### Running Python Scripts from the Container
 
