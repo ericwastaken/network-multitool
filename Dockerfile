@@ -1,4 +1,5 @@
-FROM wbitt/network-multitool as base
+# Note we're forcing the platform to linux/amd64 to avoid issues generating images on Apple Silicon workstations
+FROM --platform=linux/amd64 wbitt/network-multitool as base
 
 # Set Prompt
 ENV PS1="\u@\h:\w$ "
