@@ -7,6 +7,10 @@ tweaks added, including support for the Azure CLI, Python3, and a few other tool
 
 For all the commands packaged in multitool see: https://github.com/wbitt/Network-MultiTool.
 
+## Available on Docker Hub
+
+This container is available on Docker Hub at https://hub.docker.com/repository/docker/ericwastakenondocker/network-multitool.
+
 ## Dependencies
 
 * Docker must be installed on the host system.
