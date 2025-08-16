@@ -5,7 +5,7 @@
 A docker container with a set of tools for Linux. This is based on the Network-MultiTool container, but with a few 
 tweaks added, including support for the Azure CLI, Python3, and a few other tools.
 
-For all the commands packaged in multitool see: https://github.com/wbitt/Network-MultiTool.
+For all the commands packaged in multitool see: https://github.com/ericwastaken/Network-MultiTool-Base.
 
 ## Available on Docker Hub
 
@@ -43,7 +43,8 @@ $ docker exec -it network-multitool /bin/bash
   ```bash
     $ ./x-shell.sh
   ```
-* Note the host directory **./host-volume** is mapped into the container into **/root/host-volume**. This is a convenient way to move files between the host and the container.
+* Note the host directory **./host-volume** is mapped into the container into **/root/host-volume**. This is a 
+* convenient way to move files between the host and the container.
 * Exit the shell with CTRL-D or the exit command.
 
 ### CONTAINER EXEC
@@ -66,7 +67,9 @@ $ ./x-exec.sh curl https://ifconfig.co
 
 ### BIN MAPPING TO YOUR PATH (CONTAINER EXEC WITH PATH ON HOST)
 
-This project provides a **bin-mapping** folder with a command that can be used to run commands inside the container. It's possible to add this folder to your PATH so that the tools could be used inside the HOST by replacing the tool name with `nmt <tool-name>`.
+This project provides a **bin-mapping** folder with a command that can be used to run commands inside the container. 
+It's possible to add this folder to your PATH so that the tools could be used inside the HOST by replacing the tool 
+name with `nmt <tool-name>`.
 
 In your .basrc or .zshrc file add the following line to add the container's bin mapping to your path:
 
@@ -108,7 +111,8 @@ If you need to use this container on a server that does not have Internet, you c
   ```bash
   $ ./x-export.sh
   ```
-* Move the all the files in this repo, including the exported docker image, using any offline method (usb drive, etc.) The exported image is placed in the **./exported** directory if you use the convenience `x-export.sh` script.
+* Move the all the files in this repo, including the exported docker image, using any offline method (usb drive, etc.) 
+* The exported image is placed in the **./exported** directory if you use the convenience `x-export.sh` script.
 * Load the image on the offline server. On the offline server, from the root directory of this project:
   ```bash
   $ ./x-import.sh
@@ -117,11 +121,13 @@ If you need to use this container on a server that does not have Internet, you c
 
 ## Python Support
 
-The container is enhanced with Python3, Pip3 and any packages defined in **host-volume/python-packages.txt**. This is useful for running python scripts in the container.
+The container is enhanced with Python3, Pip3 and any packages defined in **host-volume/python-packages.txt**. This is 
+useful for running python scripts in the container.
 
 Scripts can be run from the host or from inside the container.
 
-The pylogix package is installed by default along with some example scripts demonstrating how to communicate with Allen-Bradley PLCs.
+The pylogix package is installed by default along with some example scripts demonstrating how to communicate with 
+Allen-Bradley PLCs.
 
 > **Notes:** 
 > 1. The pylogix package is not installed on the host. It is only installed in the container.
@@ -222,7 +228,8 @@ This section discusses the customizations this repo makes to the original Networ
 3. Aliases inside the container:
    * `ll` (long list) mapped to `ls -al`
 4. Maps the host directory **host-volume** into the container's **/root/host-volume** directory.
-5. Support for python3, pip3 and any python dependencies listed in **host-volume/python-packages.txt**. Some example python scripts are also included.
+5. Support for python3, pip3 and any python dependencies listed in **host-volume/python-packages.txt**. Some example 
+6. python scripts are also included.
 
 
 

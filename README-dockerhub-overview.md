@@ -1,6 +1,8 @@
 # Network Multi-Tool (Enhanced)
 
-A Docker image that bundles a broad set of networking and troubleshooting tools, plus convenient additions like Python 3, pip, jq, curl, and the Microsoft Azure CLI. It is based on the excellent wbitt/network-multitool image with enhancements for day-to-day ops and scripting.
+A Docker image that bundles a broad set of networking and troubleshooting tools, plus convenient additions like 
+Python 3, pip, jq, curl, and the Microsoft Azure CLI. It is based on the excellent wbitt/network-multitool image (via FORK)
+with enhancements for day-to-day ops and scripting.
 
 ## Purpose
 
@@ -10,6 +12,7 @@ Use this container as a ready-to-run toolbox for:
 - Scripting and automation with Python 3 and pip-installed packages
 - Managing Azure resources with the Azure CLI (`az`)
 - Keeping a lightweight container running with a built-in tiny web server (from the base image)
+- See the full list of commands and tools at https://github.com/ericwastaken/Network-MultiTool-Base.
 
 ## Environment Variables
 
