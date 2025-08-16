@@ -1,9 +1,8 @@
-version: '3'
 services:
   network-multitool:
     build:
       context: ./
-    image: ericwastaken/network-multitool:1.0.0
+    image: network-multitool
     container_name: network-multitool
     hostname: network-multitool
     restart: no

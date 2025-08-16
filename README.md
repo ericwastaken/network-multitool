@@ -2,14 +2,17 @@
 
 ## Summary
 
-A docker container with a set of tools for Linux. This is based on the Network-MultiTool container, but with a few tweaks added.
+A docker container with a set of tools for Linux. This is based on the Network-MultiTool container, but with a few 
+tweaks added, including support for the Azure CLI, Python3, and a few other tools.
 
-For all the commands packaged and full credit goes to: https://github.com/wbitt/Network-MultiTool
+For all the commands packaged in multitool see: https://github.com/wbitt/Network-MultiTool.
 
 ## Dependencies
 
 * Docker must be installed on the host system.
-* The host must have internet access to build the initial image. (See "Offline Usage" below if you need to use this in an offline environment.)
+* The host must have internet access to build the initial image. (See "Offline Usage" below if you need to use this 
+  in an offline environment.)
+* If you intend to submit to Docker Hub, you must be logged in to Docker Hub.
 
 ## Usage
 
@@ -20,8 +23,10 @@ Start the container with the following command:
 $ docker compose up -d
 ```
 * Uses an NGINX web server to keep the container running.
-* Network mode is HOST network, so the container will use the host's network stack and commands will have network host visibility. 
-* On first "up" the image will build from the Dockerfile. This might take a few minutes. See below for "offline usage" if you need to use this in an offline environment.
+* Network mode is HOST network, so the container will use the host's network stack and commands will have network 
+  host visibility. 
+* On first "up" the image will build from the Dockerfile. This might take a few minutes. See below for "offline usage" 
+  if you need to use this in an offline environment.
 
 ### CONTAINER SHELL
 
@@ -55,7 +60,7 @@ or
 $ ./x-exec.sh curl https://ifconfig.co
 ```
 
-### CONTAINER EXEC WITH PATH ON HOST
+### BIN MAPPING TO YOUR PATH (CONTAINER EXEC WITH PATH ON HOST)
 
 This project provides a **bin-mapping** folder with a command that can be used to run commands inside the container. It's possible to add this folder to your PATH so that the tools could be used inside the HOST by replacing the tool name with `nmt <tool-name>`.
 
@@ -123,24 +128,78 @@ The pylogix package is installed by default along with some example scripts demo
 With the container running, run your script with:
 
 ```bash
-$ docker compose exec -i network-multitool python <your-script>.py <args>'
+$ docker compose exec -i network-multitool python <your-path>/<your-script>.py <args>
 ```
 * You can also use the convenience script `x-exec.sh your-python-script.py and any args`.
 * Or if you've mapped the bin-mapping folder into your path, you can run:
   ```bash
-  $ nmt python <your-script>.py <args>'
+  $ nmt python <your-path>/<your-script>.py <args>
   ```
 
 ### Running Python Scripts from the Container
 
 Once the container is running, enter the container. (See "CONTAINER SHELL" above.) Run your script with:
 ```bash
-$ python <your-script>.py <args>'
+$ python <your-path>/<your-script>.py <args>'
 ```
 
 ### Adding Python Packages
 
-Simply edit the file **host-volume/python-packages.txt** and add the package name and version to the file. The package will be installed the next time the container image is built. You might need to rebuild with `docker compose build` or with the convenience script `./x-build.sh`.
+Simply edit the file **host-volume/python-packages.txt** and add the package name and version to the file. The package 
+will be installed the next time the container image is built. You might need to rebuild with `docker compose build` or 
+with the convenience script `./x-build.sh`.
+
+## Azure CLI
+
+The image includes the Microsoft Azure CLI preinstalled and available on the PATH as `az`.
+
+- Check version:
+  ```bash
+  $ ./x-exec.sh az version
+  ```
+- Authenticate (interactive on a machine with a browser):
+  ```bash
+  $ ./x-exec.sh az login
+  ```
+- Use it as you would on a host with Azure CLI:
+  ```bash
+  $ ./x-exec.sh az account show
+  $ ./x-exec.sh az group list
+  ```
+
+Notes:
+- The CLI is installed in an isolated virtual environment at `/opt/az` and symlinked to `/usr/local/bin/az`.
+- No additional setup is required; `az` is ready to use when the container is running.
+
+## Publishing to Docker Hub
+
+This repo includes convenience scripts to build and publish the image to Docker Hub.
+
+Prerequisites:
+- Docker is installed and you are logged in to Docker Hub:
+  ```bash
+  $ docker login
+  ```
+- Set your image name and tag in `docker-build-manifest.env`:
+  - `NAME` should be your Docker Hub repo name, e.g. `yourname/network-multitool`
+  - `CURR_TAG` is the version tag you want to publish, e.g. `20250816`
+  - `BUILDER_NAME` is the buildx builder name (used for multiplatform builds)
+
+Steps:
+1. Build the image locally (choose current platform or multi-platform):
+   ```bash
+   $ ./x-build.sh
+   ```
+   - Option 1 builds with buildx for linux/amd64 and linux/arm64.
+   - Option 2 builds only for your current platform.
+
+2. Push to Docker Hub:
+   ```bash
+   $ ./x-deploy-dockerhub.sh
+   ```
+   - Option 1 uses `docker buildx build --platform linux/amd64,linux/arm64 --push` to build and push.
+   - Option 2 tags and pushes your locally built image for the current platform.
+   - The script tags the image as both `$NAME:$CURR_TAG` and `$NAME:latest` and pushes both tags.
 
 ## Customizations
 
@@ -148,6 +207,7 @@ This section discusses the customizations this repo makes to the original Networ
 
 1. Convenience scripts, which verify dependencies and run docker commands when necessary:
    * `x-build.sh` - Builds the docker image.
+   * `x-deploy-dockerhub.sh` - Builds and pushes the docker image to Docker Hub.
    * `x-up.sh` - Starts the container.
    * `x-force-build-and-up.sh` - Forces a rebuild of the docker image and starts the container.
    * `x-exec.sh` - Runs a command inside the running container.
